@@ -18,7 +18,7 @@ async def get_redis() -> aioredis.Redis:
     except RedisError:
         return None
 
-def cache(key_pattern: str, expiration: int = 5):
+def caches(key_pattern: str, expiration: int = 5):
     """Manages a basic caching approach for a function."""
 
     def decorator(func):
@@ -36,11 +36,13 @@ def cache(key_pattern: str, expiration: int = 5):
                     # Attempt to get cached response
                     cached_response = await redis.get(cache_key)
                     if cached_response:
+                        print(f"Cache Hit! ({cache_key})")
                         return json.loads(cached_response)
                 except RedisError:
                     print(f"Failed to read from Redis for key: {cache_key}")
 
             # If there is no cached response, call the wrapped function
+            print(f"Cache Miss! ({cache_key})")
             response = await func(*args, **kwargs)
 
             if redis:
