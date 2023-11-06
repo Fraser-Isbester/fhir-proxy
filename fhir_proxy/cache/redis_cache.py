@@ -73,7 +73,7 @@ def invalidates(key_pattern: str, fail_on_error: bool = False):
 
             # Determine the Redis key for this request
             cache_key = key_pattern.format(*args, **kwargs)
-            redis = kwargs.get('redis', await cache())
+            redis = kwargs.get('redis', await get_redis())
 
             if redis:
                 # Invalidate the cache
