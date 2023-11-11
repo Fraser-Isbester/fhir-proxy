@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 
 from fhir_proxy import cache
 
@@ -14,7 +14,7 @@ async def create_resource(resource_type: str):
 
 @router.get("/fhir/{resource_type}/{id}")
 @cache.caches(key_pattern="{resource_type}:{id}")
-async def get_resource(resource_type: str, id: str):
+async def get_resource(resource_type: str, id: str, response: Response):
     """Read a FHIR resource by type and ID."""
 
     return {"resourceType": resource_type, "id": id}

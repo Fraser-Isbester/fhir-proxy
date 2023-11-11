@@ -5,7 +5,7 @@ from functools import wraps
 from typing import Optional
 
 import redis.asyncio as aioredis
-from fastapi import HTTPException
+from fastapi import HTTPException, Response
 from redis.exceptions import RedisError
 
 from fhir_proxy import config
@@ -32,13 +32,18 @@ def caches(key_pattern: str, expiration: int = 5):
             # Fetch the redis instance from the function arguments
             redis = kwargs.get("redis", await get_redis())
 
+            # Configure Response object
+            response = kwargs.get("response", Response())
+            response.headers["x-cache"] = "MISS"
+
             if redis:
                 try:
                     # Attempt to get cached response
                     cached_response = await redis.get(cache_key)
                     if cached_response:
-                        print(f"Cache Hit! ({cache_key})")
-                        return json.loads(cached_response)
+                        response.headers["x-cache"] = "HIT"
+                        return Response(content=cached_response, headers=response.headers)
+
                 except RedisError:
                     print(f"Failed to read from Redis for key: {cache_key}")
 
@@ -72,8 +77,6 @@ def invalidates(key_pattern: str, fail_on_error: bool = False):
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
-            # Execute the function first
-            response = await func(*args, **kwargs)
 
             # Determine the Redis key for this request
             cache_key = key_pattern.format(*args, **kwargs)
@@ -91,6 +94,8 @@ def invalidates(key_pattern: str, fail_on_error: bool = False):
                     else:
                         print(f"Cache invalidation failed for key: {cache_key}, error: {e}")
 
+            # Execute the function first
+            response = await func(*args, **kwargs)
             return response
 
         return wrapper

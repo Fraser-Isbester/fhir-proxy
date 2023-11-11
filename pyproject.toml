@@ -22,6 +22,11 @@ ruff = "^0.1.4"
 black = "^23.10.1"
 autoimport = "^1.3.3"
 
+
+
+[tool.poetry.group.fhir-tools.dependencies]
+fhirpathpy = "^0.2.2"
+
 [tool.black]
 line-length = 100
 target-version = ['py311']
