@@ -2,7 +2,7 @@ import time
 
 from fastapi import FastAPI, Request
 
-from fhir_proxy.routers import fhir_api
+from fhir_proxy.routers import simple
 
 app = FastAPI()
 
@@ -20,4 +20,4 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 # Registers the FHIR API router with the application
-app.include_router(fhir_api.router, prefix="/api/v1", tags=["FHIR API"])
+app.include_router(simple.router, prefix="/api/v1", tags=["FHIR API"])
