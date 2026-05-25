@@ -34,9 +34,9 @@ httpcore==1.0.1 ; python_version >= "3.11" and python_version < "4.0" \
 httpx==0.25.1 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:fec7d6cc5c27c578a391f7e87b9aa7d3d8fbcd034f6399f9f79b45bcc12a866a \
     --hash=sha256:ffd96d5cf901e63863d9f1b4b6807861dbea4d301613415d9e6e57ead15fc5d0
-idna==3.4 ; python_version >= "3.11" and python_version < "4.0" \
-    --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
-    --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
+idna==3.15 ; python_version >= "3.11" and python_version < "4.0" \
+    --hash=sha256:048adeaf8c2d788c40fee287673ccaa74c24ffd8dcf09ffa555a2fbb59f10ac8 \
+    --hash=sha256:ca962446ea538f7092a95e057da437618e886f4d349216d2b1e294abfdb65fdc
 pydantic==1.10.13 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:1740068fd8e2ef6eb27a20e5651df000978edce6da6803c2bef0bc74540f9548 \
     --hash=sha256:210ce042e8f6f7c01168b2d84d4c9eb2b009fe7bf572c2266e235edf14bacd80 \
